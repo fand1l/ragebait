@@ -11,12 +11,23 @@ import { useGame } from '../engine/store'
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
+const MOTION = {
+  center: {
+    hidden: { scale: 0.6, opacity: 0 },
+    shown: { scale: 1, opacity: 1 },
+    exit: { scale: 0.8, opacity: 0 },
+  },
+  bottom: { hidden: { y: '100%' }, shown: { y: 0 }, exit: { y: '100%' } },
+  full: { hidden: { x: '100%' }, shown: { x: 0 }, exit: { x: '100%' } },
+}
+
 interface Props {
   /** Назва діалогу для скрінрідерів. */
   label: string
   /** Esc завжди закриває вікно — хоч якась справедливість. */
   onClose: () => void
-  placement?: 'center' | 'bottom'
+  /** `full` — на весь екран, ніби відкрилася інша сторінка. */
+  placement?: 'center' | 'bottom' | 'full'
   className?: string
   children: ReactNode
 }
@@ -68,11 +79,18 @@ export function Modal({
     dialogRef.current?.focus()
     window.addEventListener('keydown', onKeyDown)
     // Сторінка під вікном не прокручується — особливо важливо на телефоні.
-    const previousOverflow = document.body.style.overflow
+    // Відступ займає місце смуги прокрутки, щоб вміст не стрибав убік.
+    const { overflow, paddingRight } = document.body.style
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth
     document.body.style.overflow = 'hidden'
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`
+    }
     return () => {
       window.removeEventListener('keydown', onKeyDown)
-      document.body.style.overflow = previousOverflow
+      document.body.style.overflow = overflow
+      document.body.style.paddingRight = paddingRight
       if (previouslyFocused instanceof HTMLElement) previouslyFocused.focus()
     }
   }, [])
@@ -88,8 +106,10 @@ export function Modal({
       className={`fixed inset-0 z-50 flex overscroll-contain bg-black/60 ${
         placement === 'bottom'
           ? 'items-end justify-center'
-          : // Вікно, вище за екран, прокручується, а не обрізається.
-            'overflow-y-auto p-4 short:p-2'
+          : placement === 'full'
+            ? ''
+            : // Вікно, вище за екран, прокручується, а не обрізається.
+              'overflow-y-auto p-4 short:p-2'
       }`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -99,15 +119,12 @@ export function Modal({
       }}
     >
       <motion.div
-        className={placement === 'bottom' ? 'w-full' : 'm-auto w-full max-w-md'}
-        initial={
-          placement === 'bottom' ? { y: '100%' } : { scale: 0.6, opacity: 0 }
+        className={
+          placement === 'center' ? 'm-auto w-full max-w-md' : 'w-full'
         }
-        animate={placement === 'bottom' ? { y: 0 } : { scale: 1, opacity: 1 }}
-        exit={{
-          ...(placement === 'bottom' ? { y: '100%' } : { scale: 0.8, opacity: 0 }),
-          transition: { duration: 0.15 },
-        }}
+        initial={MOTION[placement].hidden}
+        animate={MOTION[placement].shown}
+        exit={{ ...MOTION[placement].exit, transition: { duration: 0.15 } }}
         transition={{ type: 'spring', stiffness: 320, damping: 26 }}
       >
         <div

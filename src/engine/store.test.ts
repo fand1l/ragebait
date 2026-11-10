@@ -56,6 +56,31 @@ describe('game store', () => {
     expect(game().runtimes['premium-countdown'].active).toBe(false)
   })
 
+  it('a fake close button opens the ad page and angers more than a plain ad click', () => {
+    game().openAdPage(2, 'fake-close')
+    expect(game().adPage).toBe(2)
+    expect(game().stats).toMatchObject({ misclicks: 1, fakeCloses: 1 })
+    const afterFake = game().rage
+
+    game().closeAdPage()
+    expect(game().adPage).toBeNull()
+
+    game().openAdPage(0, 'ad')
+    expect(game().stats).toMatchObject({ misclicks: 2, fakeCloses: 1 })
+    expect(game().rage - afterFake).toBeLessThan(afterFake)
+  })
+
+  it('calm mode and finishing both leave the ad page', () => {
+    game().openAdPage(1, 'ad')
+    game().setCalm(true)
+    expect(game().adPage).toBeNull()
+
+    game().setCalm(false)
+    game().openAdPage(1, 'ad')
+    game().finish('resisted')
+    expect(game().adPage).toBeNull()
+  })
+
   it('restart wipes the session', () => {
     game().open('sticky-ad')
     game().misclick()

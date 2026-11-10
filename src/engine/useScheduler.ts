@@ -7,7 +7,10 @@ const TICK_MS = 250
 
 /** Раз на тік питає планувальник, кого випустити на користувача. */
 export function useScheduler() {
-  const enabled = useGame((s) => !s.calm && s.screen === 'article')
+  // Поки користувач «на сайті рекламодавця», нових вікон не відкриваємо.
+  const enabled = useGame(
+    (s) => !s.calm && s.screen === 'article' && s.adPage === null,
+  )
 
   useEffect(() => {
     if (!enabled) return

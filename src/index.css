@@ -81,8 +81,6 @@
     scroll-behavior: smooth;
     /* Якорі не мають ховатися під липкою шапкою; висоту рахує SiteHeader. */
     scroll-padding-top: calc(var(--sticky-top, 4rem) + 0.75rem);
-    /* Місце під смугу прокрутки лишається, коли модалка блокує скрол. */
-    scrollbar-gutter: stable;
   }
 
   body {

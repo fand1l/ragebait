@@ -7,6 +7,8 @@ export interface Stats {
   popupsClosed: number
   /** Кліки по рекламі, клікбейту й «не тих» кнопках. */
   misclicks: number
+  /** Скільки разів повірили фальшивому хрестику в рекламі. */
+  fakeCloses: number
   /** Скільки cookie-перемикачів перемкнуто руками. */
   cookieToggles: number
   cookieChoice: 'accepted-all' | 'rejected-all' | 'partial' | null
@@ -21,6 +23,7 @@ export interface Stats {
 const EMPTY_STATS: Stats = {
   popupsClosed: 0,
   misclicks: 0,
+  fakeCloses: 0,
   cookieToggles: 0,
   cookieChoice: null,
   timerRestarts: 0,
@@ -44,6 +47,8 @@ interface SessionState {
   rage: number
   runtimes: Runtimes
   lastModalClosedAt: number | null
+  /** Номер реклами, чий «сайт» зараз відкрито поверх сторінки. */
+  adPage: number | null
   stats: Stats
 }
 
@@ -53,6 +58,9 @@ interface Actions {
   dismiss: (id: AnnoyanceId, opts?: { silent?: boolean }) => void
   addRage: (amount: number) => void
   misclick: (rage?: number) => void
+  /** «Перехід» на сайт рекламодавця: через саму рекламу чи фальшивий хрестик. */
+  openAdPage: (adIndex: number, via: 'ad' | 'fake-close') => void
+  closeAdPage: () => void
   patchStats: (patch: Partial<Stats>) => void
   bumpStat: (
     key: 'cookieToggles' | 'timerRestarts' | 'fakeSubscriptions',
@@ -71,6 +79,7 @@ const freshSession = (): SessionState => ({
   rage: 0,
   runtimes: emptyRuntimes(),
   lastModalClosedAt: null,
+  adPage: null,
   stats: { ...EMPTY_STATS },
 })
 
@@ -126,6 +135,20 @@ export const useGame = create<SessionState & Actions>()((set) => ({
       stats: { ...s.stats, misclicks: s.stats.misclicks + 1 },
     })),
 
+  openAdPage: (adIndex, via) =>
+    set((s) => ({
+      adPage: adIndex,
+      // Обман із хрестиком бісить сильніше, ніж чесний промах по рекламі.
+      rage: s.rage + (via === 'fake-close' ? 6 : 3),
+      stats: {
+        ...s.stats,
+        misclicks: s.stats.misclicks + 1,
+        fakeCloses: s.stats.fakeCloses + (via === 'fake-close' ? 1 : 0),
+      },
+    })),
+
+  closeAdPage: () => set({ adPage: null }),
+
   patchStats: (patch) => set((s) => ({ stats: { ...s.stats, ...patch } })),
 
   bumpStat: (key, by = 1) =>
@@ -134,7 +157,11 @@ export const useGame = create<SessionState & Actions>()((set) => ({
   setCalm: (calm) =>
     set((s) =>
       calm
-        ? { calm: true, runtimes: closeAll(s.runtimes, Date.now()) }
+        ? {
+            calm: true,
+            adPage: null,
+            runtimes: closeAll(s.runtimes, Date.now()),
+          }
         : { calm: false },
     ),
 
@@ -144,6 +171,7 @@ export const useGame = create<SessionState & Actions>()((set) => ({
       return {
         screen: 'victory',
         finishedAt: now,
+        adPage: null,
         runtimes: closeAll(s.runtimes, now),
         stats: { ...s.stats, ending },
       }

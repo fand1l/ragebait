@@ -34,7 +34,8 @@ export const ANNOYANCES = [
   },
   {
     id: 'sticky-ad',
-    pattern: 'Реклама на пів екрана з мікроскопічним хрестиком',
+    pattern:
+      'Реклама з фальшивим хрестиком: справжній з’являється лише через 10 секунд',
     slot: 'bottom',
     trigger: { type: 'time', afterMs: 5000 },
     cooldownMs: 15_000,

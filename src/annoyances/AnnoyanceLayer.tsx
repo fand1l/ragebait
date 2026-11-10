@@ -3,6 +3,7 @@ import type { ComponentType } from 'react'
 import { ANNOYANCES, type AnnoyanceId } from '../engine/configs'
 import { useGame } from '../engine/store'
 import type { Slot } from '../engine/types'
+import { AdLandingPage } from './AdLandingPage'
 import { CookieBanner } from './CookieBanner'
 import { NewsletterPopup } from './NewsletterPopup'
 import { PremiumCountdown } from './PremiumCountdown'
@@ -53,6 +54,8 @@ export function AnnoyanceSlot({ slot }: { slot: Slot }) {
 
 /** Усе, що висить поверх сторінки: модалки, нижня реклама, спливашки. */
 export function AnnoyanceOverlays() {
+  const adPage = useGame((s) => s.adPage)
+
   return (
     <>
       <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex flex-col items-start">
@@ -60,6 +63,9 @@ export function AnnoyanceOverlays() {
         <AnnoyanceSlot slot="bottom" />
       </div>
       <AnnoyanceSlot slot="modal" />
+      <AnimatePresence>
+        {adPage !== null && <AdLandingPage key={adPage} adIndex={adPage} />}
+      </AnimatePresence>
     </>
   )
 }

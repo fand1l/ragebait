@@ -10,6 +10,16 @@ const COOKIE_SUMMARY: Record<NonNullable<Stats['cookieChoice']>, string> = {
   partial: 'вимкнули частину партнерів',
 }
 
+/** «1 раз», «2 рази», «5 разів» — українська множина. */
+function timesWord(count: number): string {
+  const lastTwo = count % 100
+  const last = count % 10
+  if (lastTwo >= 11 && lastTwo <= 14) return 'разів'
+  if (last === 1) return 'раз'
+  if (last >= 2 && last <= 4) return 'рази'
+  return 'разів'
+}
+
 function Stat({
   icon,
   value,
@@ -122,6 +132,13 @@ export function Victory() {
           label="зекономлено на Premium"
         />
       </ul>
+      {stats.fakeCloses > 0 && (
+        <p className="mt-3 text-sm text-ink-soft">
+          ❌ Фальшивий хрестик у рекламі обдурив вас{' '}
+          <span className="tabular-nums">{stats.fakeCloses}</span>{' '}
+          {timesWord(stats.fakeCloses)}.
+        </p>
+      )}
       {stats.cookieChoice && (
         <p className="mt-3 text-sm text-ink-soft">
           🍪 У cookie-вікні ви {COOKIE_SUMMARY[stats.cookieChoice]}.
