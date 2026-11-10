@@ -1,0 +1,100 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-cream: #fff9ec;
+  --color-shell: #f3e7d0;
+  --color-yolk: #f5b301;
+  --color-yolk-dark: #b97f00;
+  --color-ink: #2b2118;
+  --color-ink-soft: #6b5d4f;
+
+  --font-serif: Georgia, 'Times New Roman', serif;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Шрифт для всього, що має виглядати якомога огидніше. */
+  --font-comic: 'Comic Sans MS', 'Comic Sans', 'Chalkboard SE', 'Comic Neue', cursive;
+
+  --animate-shake: shake 0.4s ease-in-out;
+  --animate-throb: throb 1.2s ease-in-out infinite;
+  --animate-wiggle: wiggle 2.4s ease-in-out infinite;
+
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(-8px) rotate(-1deg);
+    }
+    40% {
+      transform: translateX(8px) rotate(1deg);
+    }
+    60% {
+      transform: translateX(-5px);
+    }
+    80% {
+      transform: translateX(5px);
+    }
+  }
+
+  /* Не частіше ~1 Гц: дратує, але безпечно (без мерехтіння). */
+  @keyframes throb {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.08);
+    }
+  }
+
+  @keyframes wiggle {
+    0%,
+    100% {
+      transform: rotate(-2deg);
+    }
+    50% {
+      transform: rotate(2deg);
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  :focus-visible {
+    outline: 3px solid #1d4ed8;
+    outline-offset: 2px;
+  }
+}
+
+/* Поважаємо налаштування системи: хаос лишається, рух — ні. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
