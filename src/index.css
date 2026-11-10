@@ -1,5 +1,23 @@
 @import 'tailwindcss';
 
+/* Низькі екрани: телефон у горизонтальній орієнтації. */
+@custom-variant short (@media (max-height: 480px));
+
+/*
+ * Збільшує зону натискання для пальця, не змінюючи вигляду: хрестик лишається
+ * мікроскопічним, але влучити в нього на телефоні все ж можливо.
+ * Кнопка має бути позиціонована (relative/absolute).
+ */
+@utility tap-area {
+  @media (pointer: coarse) {
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -0.7rem;
+    }
+  }
+}
+
 @theme {
   --color-cream: #fff9ec;
   --color-shell: #f3e7d0;
@@ -61,6 +79,10 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Якорі не мають ховатися під липкою шапкою; висоту рахує SiteHeader. */
+    scroll-padding-top: calc(var(--sticky-top, 4rem) + 0.75rem);
+    /* Місце під смугу прокрутки лишається, коли модалка блокує скрол. */
+    scrollbar-gutter: stable;
   }
 
   body {
@@ -73,6 +95,13 @@
 
   button {
     cursor: pointer;
+  }
+
+  /* Без затримки й без масштабування подвійним дотиком (47 перемикачів!). */
+  a,
+  button,
+  input {
+    touch-action: manipulation;
   }
 
   button:disabled {

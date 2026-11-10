@@ -33,20 +33,20 @@ export function PremiumCountdown({ dismiss, showIndex }: AnnoyanceProps) {
     <div
       role="region"
       aria-label="Акція на Premium"
-      className="relative bg-gradient-to-r from-red-700 via-red-600 to-orange-600 px-10 py-2 text-center font-comic text-white shadow-md"
+      className="relative bg-gradient-to-r from-red-700 via-red-600 to-orange-600 px-8 py-1.5 text-center font-comic text-white shadow-md sm:px-10 sm:py-2 short:py-1"
     >
       <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-        <span className="text-sm font-bold sm:text-base">
+        <span className="text-xs font-bold sm:text-base short:text-xs">
           {headline}{' '}
           <span className="whitespace-nowrap rounded bg-yellow-300 px-1.5 py-0.5 text-red-800">
             −90%
           </span>{' '}
-          на Жовток Premium
+          на <span className="hidden sm:inline">Жовток </span>Premium
         </span>
-        <span className="flex items-center gap-2 text-sm">
-          до кінця акції:
+        <span className="flex items-center gap-2 text-xs sm:text-sm">
+          <span className="hidden sm:inline short:hidden">до кінця акції:</span>
           <span
-            className="animate-throb rounded bg-black px-2 py-0.5 font-mono text-base font-bold tabular-nums text-yellow-300"
+            className="animate-throb rounded bg-black px-2 py-0.5 font-mono text-sm font-bold tabular-nums text-yellow-300 sm:text-base short:text-sm"
             role="timer"
             aria-label={`Залишилось ${formatClock(secondsLeft)}`}
           >
@@ -55,7 +55,7 @@ export function PremiumCountdown({ dismiss, showIndex }: AnnoyanceProps) {
         </span>
         <a
           href="#recipe"
-          className="rounded-full bg-yellow-300 px-3 py-1 text-xs font-extrabold uppercase text-red-800 shadow hover:bg-yellow-200"
+          className="whitespace-nowrap rounded-full bg-yellow-300 px-3 py-1 text-[11px] font-extrabold uppercase text-red-800 shadow hover:bg-yellow-200 sm:text-xs"
         >
           Забрати знижку
         </a>
@@ -64,7 +64,7 @@ export function PremiumCountdown({ dismiss, showIndex }: AnnoyanceProps) {
         type="button"
         onClick={() => dismiss()}
         aria-label="Закрити акцію"
-        className="absolute right-2 top-1/2 -translate-y-1/2 rounded px-1.5 text-sm text-white/70 hover:text-white"
+        className="tap-area absolute right-1.5 top-1/2 -translate-y-1/2 rounded px-1.5 py-0.5 text-sm text-white/70 hover:text-white"
       >
         ✕
       </button>

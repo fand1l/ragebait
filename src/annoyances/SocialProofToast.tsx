@@ -16,7 +16,7 @@ export function SocialProofToast({ dismiss, showIndex }: AnnoyanceProps) {
   return (
     <motion.div
       role="status"
-      className="pointer-events-auto m-3 flex max-w-xs items-center gap-3 rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-2 shadow-xl"
+      className="pointer-events-auto m-3 flex max-w-[min(20rem,calc(100vw-1.5rem))] items-center gap-3 rounded-xl border border-gray-200 bg-white py-2.5 pl-3 pr-2 shadow-xl short:m-2 short:py-1.5"
       initial={{ x: -320, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: -320, opacity: 0 }}
@@ -35,7 +35,7 @@ export function SocialProofToast({ dismiss, showIndex }: AnnoyanceProps) {
         type="button"
         onClick={() => dismiss()}
         aria-label="Закрити сповіщення"
-        className="self-start px-1 text-xs text-gray-400 hover:text-gray-700"
+        className="tap-area relative self-start px-1 text-xs text-gray-400 hover:text-gray-700"
       >
         ✕
       </button>

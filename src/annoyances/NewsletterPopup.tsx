@@ -47,15 +47,15 @@ export function NewsletterPopup({ dismiss, showIndex }: AnnoyanceProps) {
         type="button"
         onClick={() => dismiss()}
         aria-label="Закрити"
-        className="absolute right-1.5 top-1.5 z-10 px-1 text-[10px] leading-none text-white/50 hover:text-white"
+        className="tap-area absolute right-1.5 top-1.5 z-10 px-1 text-[10px] leading-none text-white/50 hover:text-white"
       >
         ✕
       </button>
-      <div className="bg-gradient-to-br from-fuchsia-600 to-purple-700 p-6 text-center text-white">
-        <div className="animate-wiggle text-6xl" aria-hidden="true">
+      <div className="bg-gradient-to-br from-fuchsia-600 to-purple-700 p-6 text-center text-white short:p-3">
+        <div className="animate-wiggle text-6xl short:hidden" aria-hidden="true">
           💌
         </div>
-        <h2 className="mt-2 font-comic text-2xl font-bold">
+        <h2 className="mt-2 font-comic text-2xl font-bold short:mt-0 short:text-xl">
           {subscribed ? 'Дякуємо! 🎉' : variant.title}
         </h2>
       </div>
@@ -75,7 +75,7 @@ export function NewsletterPopup({ dismiss, showIndex }: AnnoyanceProps) {
           </button>
         </div>
       ) : (
-        <form onSubmit={subscribe} className="space-y-3 p-6">
+        <form onSubmit={subscribe} className="space-y-3 p-6 short:space-y-2 short:p-4">
           <p className="text-center text-sm text-ink-soft">{variant.text}</p>
           <input
             type="email"
@@ -87,14 +87,14 @@ export function NewsletterPopup({ dismiss, showIndex }: AnnoyanceProps) {
           />
           <button
             type="submit"
-            className="w-full rounded-lg bg-yellow-400 py-3 font-comic text-lg font-extrabold uppercase text-purple-900 shadow hover:bg-yellow-300"
+            className="w-full rounded-lg bg-yellow-400 py-3 font-comic text-lg font-extrabold uppercase text-purple-900 shadow hover:bg-yellow-300 short:py-2"
           >
             Підписатися!!!
           </button>
           <button
             type="button"
             onClick={() => dismiss()}
-            className="mx-auto block text-[11px] text-gray-500 underline"
+            className="tap-area relative mx-auto block text-[11px] text-gray-500 underline"
           >
             {variant.decline}
           </button>

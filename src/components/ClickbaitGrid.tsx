@@ -20,7 +20,7 @@ export function ClickbaitGrid({ offset }: Props) {
   return (
     <aside
       aria-label="Партнерські матеріали"
-      className="my-10 rounded-xl border border-shell bg-white p-4"
+      className="my-8 rounded-xl border border-shell bg-white p-3 sm:my-10 sm:p-4"
     >
       <div className="mb-3 flex items-baseline justify-between">
         <span className="text-sm font-bold uppercase tracking-wide">
@@ -36,15 +36,15 @@ export function ClickbaitGrid({ offset }: Props) {
             key={card.title}
             type="button"
             onClick={() => open(index)}
-            className="group overflow-hidden rounded-lg border border-shell text-left transition-transform hover:-translate-y-0.5"
+            className="group flex overflow-hidden rounded-lg border border-shell text-left transition-transform hover:-translate-y-0.5 sm:block"
           >
             <span
-              className={`flex h-24 items-center justify-center bg-gradient-to-br text-5xl ${card.background}`}
+              className={`flex min-h-20 w-24 shrink-0 items-center justify-center bg-gradient-to-br text-4xl sm:h-24 sm:w-auto sm:text-5xl ${card.background}`}
               aria-hidden="true"
             >
               {card.emoji}
             </span>
-            <span className="block p-2.5 text-sm font-semibold leading-snug group-hover:underline">
+            <span className="block self-center p-2.5 text-sm font-semibold leading-snug group-hover:underline">
               {opened.has(index)
                 ? 'Це реклама. Тут нічого немає. Як і завжди. (Промах +1)'
                 : card.title}

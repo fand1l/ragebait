@@ -20,7 +20,7 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div id="top" className="flex min-h-screen flex-col">
+      <div id="top" className="flex min-h-dvh flex-col">
         <SiteHeader />
         <div className="flex-1">
           {screen === 'article' ? <Article /> : <Victory />}
@@ -35,7 +35,8 @@ export default function App() {
             форми та «покупки» несправжні й нічого нікуди не відправляють.
           </p>
           <p className="mt-1">
-            Втомилися? Натисніть Esc {ESC_PRESSES} разів — і хаос зникне.
+            Втомилися? Натисніть 😮‍💨 у шапці або Esc {ESC_PRESSES} разів — і
+            хаос зникне.
           </p>
         </footer>
       </div>

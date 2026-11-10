@@ -7,7 +7,7 @@ export function Paywall() {
     <section
       id="recipe"
       aria-labelledby="recipe-title"
-      className="relative mt-8 min-h-80 scroll-mt-40 overflow-hidden rounded-2xl border-2 border-yolk bg-white shadow-lg"
+      className="relative mt-8 min-h-80 overflow-hidden rounded-2xl border-2 border-yolk bg-white shadow-lg"
     >
       <div className="p-6">
         <h2 id="recipe-title" className="font-serif text-2xl font-bold">
@@ -44,7 +44,7 @@ export function Paywall() {
         <button
           type="button"
           onClick={() => finish('resisted')}
-          className="text-[11px] text-gray-500 underline"
+          className="tap-area relative text-[11px] text-gray-500 underline"
         >
           Ні, дякую, я й далі їстиму яйця сирими
         </button>

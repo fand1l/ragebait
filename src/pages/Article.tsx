@@ -16,7 +16,7 @@ export function Article() {
         Головна › Рецепти › Сніданки › Яйця › Варені яйця › Як зварити яйце
       </nav>
 
-      <h1 className="mt-3 font-serif text-4xl font-bold leading-tight sm:text-5xl">
+      <h1 className="mt-3 font-serif text-3xl font-bold leading-tight sm:text-5xl">
         Як зварити яйце: найпростіший рецепт (2026)
       </h1>
 
@@ -40,14 +40,14 @@ export function Article() {
       </a>
 
       <div
-        className="mt-6 flex h-56 items-center justify-center rounded-2xl bg-gradient-to-br from-yolk/30 via-shell to-yolk/50 text-[7rem] sm:h-72"
+        className="mt-6 flex h-44 items-center justify-center rounded-2xl bg-gradient-to-br from-yolk/30 via-shell to-yolk/50 text-[5.5rem] sm:h-72 sm:text-[7rem]"
         role="img"
         aria-label="Яйце"
       >
         🥚
       </div>
 
-      <div className="mt-8 space-y-4 font-serif text-lg leading-relaxed">
+      <div className="mt-8 space-y-4 font-serif text-[1.0625rem] leading-relaxed sm:text-lg">
         <p>
           Перш ніж ми перейдемо до рецепта, дозвольте розповісти, чому варене
           яйце для мене — не просто страва. Це подорож завдовжки в життя. І,

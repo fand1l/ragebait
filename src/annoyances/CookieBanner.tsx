@@ -47,10 +47,12 @@ export function CookieBanner({ dismiss, showIndex }: AnnoyanceProps) {
       // Закрили вікно — значить, погодились. Так це зазвичай і працює.
       onClose={acceptAll}
       placement="bottom"
-      className="flex max-h-[85vh] min-h-[50vh] flex-col rounded-t-2xl bg-white shadow-2xl"
+      className="flex max-h-[85dvh] min-h-[50dvh] flex-col rounded-t-2xl bg-white shadow-2xl short:max-h-[94dvh]"
     >
       {view === 'main' ? (
-        <div className="mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center gap-4 p-6 sm:p-8">
+        <div className="mx-auto flex min-h-0 w-full max-w-2xl flex-1 flex-col gap-4 overflow-y-auto overscroll-contain p-5 sm:p-8 short:gap-2 short:p-4">
+          {/* Автовідступи замість justify-center: якщо вміст не вміщається, його можна прокрутити від початку. */}
+          <div className="mt-auto" />
           <h2 className="font-serif text-2xl font-bold sm:text-3xl">
             {returning
               ? '🍪 Ми оновили політику cookie'
@@ -72,20 +74,21 @@ export function CookieBanner({ dismiss, showIndex }: AnnoyanceProps) {
           <button
             type="button"
             onClick={acceptAll}
-            className="rounded-xl bg-green-600 px-6 py-4 text-lg font-extrabold uppercase tracking-wide text-white shadow-lg hover:bg-green-500"
+            className="rounded-xl bg-green-600 px-6 py-4 text-lg font-extrabold uppercase tracking-wide text-white shadow-lg hover:bg-green-500 short:py-2.5"
           >
             Прийняти все 🍪
           </button>
           <button
             type="button"
             onClick={() => setView('settings')}
-            className="self-center text-[11px] text-gray-500 underline decoration-dotted"
+            className="tap-area relative self-center text-[11px] text-gray-500 underline decoration-dotted"
           >
             налаштувати
           </button>
+          <div className="mb-auto" />
         </div>
       ) : (
-        <div className="mx-auto flex min-h-0 w-full max-w-2xl flex-1 flex-col p-4 sm:p-6">
+        <div className="mx-auto flex min-h-0 w-full max-w-2xl flex-1 flex-col p-4 sm:p-6 short:p-3">
           <h2 className="font-serif text-xl font-bold">
             Налаштування приватності
           </h2>
@@ -115,7 +118,7 @@ export function CookieBanner({ dismiss, showIndex }: AnnoyanceProps) {
             )}
           </div>
 
-          <ul className="mt-3 min-h-0 flex-1 divide-y divide-gray-100 overflow-y-auto rounded-lg border border-gray-200">
+          <ul className="mt-3 min-h-24 flex-1 divide-y divide-gray-100 overflow-y-auto overscroll-contain rounded-lg border border-gray-200 short:mt-2">
             {PARTNERS.map((partner, index) => (
               <li
                 key={partner.name}
@@ -149,18 +152,18 @@ export function CookieBanner({ dismiss, showIndex }: AnnoyanceProps) {
             ))}
           </ul>
 
-          <div className="mt-4 flex items-center justify-between gap-3">
+          <div className="mt-4 flex items-center justify-between gap-3 short:mt-2">
             <button
               type="button"
               onClick={save}
-              className="text-xs text-gray-500 underline decoration-dotted"
+              className="tap-area relative text-xs text-gray-500 underline decoration-dotted"
             >
               зберегти мій вибір
             </button>
             <button
               type="button"
               onClick={acceptAll}
-              className="rounded-xl bg-green-600 px-6 py-3 font-extrabold uppercase text-white shadow-lg hover:bg-green-500"
+              className="whitespace-nowrap rounded-xl bg-green-600 px-4 py-2.5 text-sm font-extrabold uppercase text-white shadow-lg hover:bg-green-500 sm:px-6 sm:py-3 sm:text-base"
             >
               Прийняти все 🍪
             </button>

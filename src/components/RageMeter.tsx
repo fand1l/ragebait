@@ -20,7 +20,7 @@ export function RageMeter() {
       >
         {level.emoji}
       </span>
-      <div className="w-24 sm:w-36" aria-hidden="true">
+      <div className="w-20 sm:w-36" aria-hidden="true">
         <div className="flex items-baseline justify-between text-[11px] font-semibold leading-tight">
           <span className="truncate">{level.label}</span>
           <span className="tabular-nums text-ink-soft">{rage}</span>

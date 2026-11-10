@@ -51,7 +51,7 @@ export function Victory() {
 
   return (
     <main className="mx-auto max-w-3xl px-4 pb-16 pt-8">
-      <h1 className="font-serif text-4xl font-bold sm:text-5xl">
+      <h1 className="font-serif text-3xl font-bold sm:text-5xl">
         🎉 Вітаємо, ви вижили!
       </h1>
       <p className="mt-3 text-lg text-ink-soft">

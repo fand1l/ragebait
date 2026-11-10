@@ -67,8 +67,12 @@ export function Modal({
     const previouslyFocused = document.activeElement
     dialogRef.current?.focus()
     window.addEventListener('keydown', onKeyDown)
+    // Сторінка під вікном не прокручується — особливо важливо на телефоні.
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     return () => {
       window.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = previousOverflow
       if (previouslyFocused instanceof HTMLElement) previouslyFocused.focus()
     }
   }, [])
@@ -81,10 +85,11 @@ export function Modal({
 
   return (
     <motion.div
-      className={`fixed inset-0 z-50 flex bg-black/60 ${
+      className={`fixed inset-0 z-50 flex overscroll-contain bg-black/60 ${
         placement === 'bottom'
           ? 'items-end justify-center'
-          : 'items-center justify-center p-4'
+          : // Вікно, вище за екран, прокручується, а не обрізається.
+            'overflow-y-auto p-4 short:p-2'
       }`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -94,7 +99,7 @@ export function Modal({
       }}
     >
       <motion.div
-        className={placement === 'bottom' ? 'w-full' : 'w-full max-w-md'}
+        className={placement === 'bottom' ? 'w-full' : 'm-auto w-full max-w-md'}
         initial={
           placement === 'bottom' ? { y: '100%' } : { scale: 0.6, opacity: 0 }
         }
